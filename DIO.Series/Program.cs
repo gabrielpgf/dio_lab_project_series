@@ -20,10 +20,10 @@ namespace DIO.Series
                         InserirSerie();
                         break;
                     case "3":
-                        //AtualizarSerie();
+                        AtualizarSerie();
                         break;
                     case "4":
-                        //ExcluirSerie();
+                        ExcluirSerie();
                         break;
                     case "5":
                         //VisualizarSerie();
@@ -56,6 +56,62 @@ namespace DIO.Series
             {
                 Console.WriteLine("#ID {0}: - {1}", serie.retornaId(), serie.retornaTitulo());
             }
+        }
+
+        private static void ExcluirSerie()
+        {
+            Console.WriteLine("Excluir Série");
+
+            var lista = repositorio.Lista();
+
+            if (lista.Count == 0)
+            {
+                Console.WriteLine("Nenhuma série a ser removida.");
+                return;
+            }
+
+            Console.Write("Digite o ID da série: ");
+            int entradaIdSerie = int.Parse(Console.ReadLine());
+            repositorio.Exclui(entradaIdSerie);
+            
+        }
+
+        private static void AtualizarSerie()
+        {
+            Console.WriteLine("Atualizar Séries");
+
+            var lista = repositorio.Lista();
+
+            if (lista.Count == 0)
+            {
+                Console.WriteLine("Nenhuma série cadastrada.");
+                return;
+            }
+
+            Console.Write("Digite o ID da série: ");
+            int entradaIdSerie = int.Parse(Console.ReadLine());
+
+            Console.Write("Digite o Gênero entre as opções acima: ");
+            int entradaGenero = int.Parse(Console.ReadLine());
+
+            Console.Write("Digite o Título da Série: ");
+            string entradaTitulo = Console.ReadLine();
+
+            Console.Write("Digite o Ano de Início da Série: ");
+            int entradaAno = int.Parse(Console.ReadLine());
+
+            Console.Write("Digite a Descrição da Série: ");
+            string entradaDescricao = Console.ReadLine();
+
+            Serie serieAtual = new Serie(id: entradaIdSerie,
+                                        genero: (Genero)entradaGenero, 
+                                        titulo: entradaTitulo,
+                                        descricao: entradaDescricao,
+                                        ano: entradaAno);
+
+
+            repositorio.Atualiza(entradaIdSerie, serieAtual);            
+            
         }
 
         private static void InserirSerie()
