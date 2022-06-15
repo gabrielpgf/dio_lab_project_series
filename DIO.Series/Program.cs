@@ -54,7 +54,8 @@ namespace DIO.Series
 
             foreach (var serie in lista)
             {
-                Console.WriteLine("#ID {0}: - {1}", serie.retornaId(), serie.retornaTitulo());
+                var excluido = serie.retornaExcluido();
+                Console.WriteLine("#ID {0}: - {1} - {2}", serie.retornaId(), serie.retornaTitulo(), (excluido ? "Fora do Catálogo" : ""));
             }
         }
 
@@ -76,6 +77,16 @@ namespace DIO.Series
             
         }
 
+        private static void VisualizarSerie()
+        {
+            Console.Write("Digite o ID da série: ");
+            int indiceSerie = int.Parse(Console.ReadLine());
+
+            var serie = repositorio.RetornaPorId(indiceSerie);
+
+            Console.WriteLine(serie);
+        }
+
         private static void AtualizarSerie()
         {
             Console.WriteLine("Atualizar Séries");
@@ -91,6 +102,11 @@ namespace DIO.Series
             Console.Write("Digite o ID da série: ");
             int entradaIdSerie = int.Parse(Console.ReadLine());
 
+            foreach(int i in Enum.GetValues(typeof(Genero)))
+            {
+                Console.WriteLine("{0} - {1}", i, Enum.GetName(typeof(Genero), i));
+            }
+
             Console.Write("Digite o Gênero entre as opções acima: ");
             int entradaGenero = int.Parse(Console.ReadLine());
 
@@ -103,14 +119,14 @@ namespace DIO.Series
             Console.Write("Digite a Descrição da Série: ");
             string entradaDescricao = Console.ReadLine();
 
-            Serie serieAtual = new Serie(id: entradaIdSerie,
+            Serie serieAtualizada = new Serie(id: entradaIdSerie,
                                         genero: (Genero)entradaGenero, 
                                         titulo: entradaTitulo,
                                         descricao: entradaDescricao,
                                         ano: entradaAno);
 
 
-            repositorio.Atualiza(entradaIdSerie, serieAtual);            
+            repositorio.Atualiza(entradaIdSerie, serieAtualizada);            
             
         }
 
